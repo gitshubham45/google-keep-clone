@@ -1,8 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent, useRef, useEffect } from 'react';
 import { useAppDispatch } from '../hooks';
 import { addNote } from '../redux/actions';
-import { v4 as uuidv4 } from 'uuid';
-// import './NoteForm.css';
+import { IoMdAddCircle } from "react-icons/io";
 
 const NoteForm: React.FC = () => {
     const [title, setTitle] = useState<string>('');
@@ -35,6 +34,11 @@ const NoteForm: React.FC = () => {
 
     const handleClickOutside = (e: MouseEvent) => {
         if (formRef.current && !formRef.current.contains(e.target as Node)) {
+            if (content.trim()) {
+                dispatch(addNote({ title, content, id: Date.now() }));
+                setTitle('');
+                setContent('');
+            }
             setIsExpanded(false);
         }
     };
@@ -44,7 +48,7 @@ const NoteForm: React.FC = () => {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, []);
+    }, [content, title]); // Add dependencies to useEffect
 
     return (
         <form ref={formRef} onSubmit={handleSubmit} className="note-form">
@@ -67,7 +71,7 @@ const NoteForm: React.FC = () => {
             ></textarea>
             {isExpanded && (
                 <button type="submit" className="add-button">
-                    Add Note
+                    <IoMdAddCircle />
                 </button>
             )}
         </form>
