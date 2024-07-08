@@ -10,7 +10,7 @@ interface NoteType {
     id: number;
     title: string;
     content: string;
-    color : string;
+    color: string;
     pinned: boolean;
     pinnedAt?: number;
 }
@@ -23,9 +23,9 @@ const Note: React.FC<NoteProps> = ({ note }) => {
 
     const dispatch = useAppDispatch();
 
-    const handlePin = (id: number , pinnedAt : number) => {
+    const handlePin = (id: number, pinnedAt: number) => {
         // Dispatch action to pin the note
-        dispatch(pinNote(id,pinnedAt));
+        dispatch(pinNote(id, pinnedAt));
     };
 
 
@@ -35,11 +35,14 @@ const Note: React.FC<NoteProps> = ({ note }) => {
 
 
     return (
-        <div className={`note ${note.pinned ? 'pinned' : ''}`} style={{ borderColor: note.color || '#ffffff',borderWidth: '8px' }}>
-            {note.title && <h3>{note.title}</h3>}
+        <div className={`note ${note.pinned ? 'pinned' : ''}`} style={{ backgroundColor: note.color || '#ffffff' }}>
+            <div>
+                {note.pinned && <MdOutlinePushPin />}
+                {note.title && <h3>{note.title}</h3>}
+            </div>
             <p>{note.content}</p>
             <div className="note-actions">
-                <button onClick={() => handlePin(note.id,Date.now())} className="pin-button">
+                <button onClick={() => handlePin(note.id, Date.now())} className="pin-button">
                     {note.pinned ? <RiUnpinFill /> : <MdOutlinePushPin />}
                 </button>
                 <button onClick={() => handleDelete(note.id)} className="delete-button">
