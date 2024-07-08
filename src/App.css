@@ -57,6 +57,39 @@
   background-color: #0056b3;
 }
 
+.color-picker {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.color-picker label {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.color-picker input[type="radio"] {
+  display: none;
+}
+
+.color-swatch {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.color-picker input[type="radio"]:checked + .color-swatch {
+  border-color: #000;
+}
+
+.green{
+  background-color: #218838;
+}
+
+
 .notes-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -64,7 +97,8 @@
   gap: 20px;
   width: 85vw;
   height: 65vh;
-  background-color: #0056b3;
+  background-color: #d3deea;
+  border-radius: 8px;
   overflow: auto;
   margin: 0 auto; /* Center the grid */
 }

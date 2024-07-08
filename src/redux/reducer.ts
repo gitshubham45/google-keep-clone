@@ -4,7 +4,9 @@ interface Note {
     id: number;
     title: string;
     content: string;
+    color: string;
     pinned: boolean;
+    pinnedAt?: number;
 }
 
 interface NoteState {
@@ -20,7 +22,7 @@ const noteReducer = (state = initialState, action: NoteActionTypes): NoteState =
         case ADD_NOTE:
             return {
                 ...state,
-                notes: [...state.notes, { ...action.payload,pinned: false }],
+                notes: [...state.notes, { ...action.payload, pinned: false }],
             };
         case DELETE_NOTE:
             return {
@@ -31,7 +33,9 @@ const noteReducer = (state = initialState, action: NoteActionTypes): NoteState =
             return {
                 ...state,
                 notes: state.notes.map((note) =>
-                    note.id === action.payload.id ? { ...note, pinned: !note.pinned } : note
+                    note.id === action.payload.id
+                        ? { ...note, pinned: !note.pinned, pinnedAt: note.pinned ? undefined : action.payload.pinnedAt }
+                        : note
                 ),
             };
         default:
